@@ -1,7 +1,8 @@
 package com.noahbres.meepmeep;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.noahbres.meepmeep.MeepMeep;
+import com.noahbres.meepmeep.core.*;
+import com.noahbres.meepmeep.*;
 import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark;
 import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
