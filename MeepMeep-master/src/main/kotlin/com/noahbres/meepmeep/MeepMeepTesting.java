@@ -1,8 +1,6 @@
 package com.noahbres.meepmeep;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.noahbres.meepmeep.core.*;
-import com.noahbres.meepmeep.*;
 import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark;
 import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
@@ -27,6 +25,7 @@ public class MeepMeepTesting {
                                 .turn(Math.toRadians(90))
                                 .forward(30)
                                 .turn(Math.toRadians(90))
+                                .forward(80)
                                 .build()
                 );
 
