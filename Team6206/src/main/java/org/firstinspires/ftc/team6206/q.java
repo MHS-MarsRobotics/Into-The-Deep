@@ -36,41 +36,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Config
-@Autonomous(name = "Red Auto", group = "Autonomous")
-public class Auton_1 extends LinearOpMode {
-
+@Autonomous(name = "QQQ", group = "Autonomous")
+public class q extends LinearOpMode {
 
 
     @Override
     public void runOpMode() throws InterruptedException {
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(35, -62, Math.toRadians(90)));
-        /*
-        Action trajectoryAction1 = drive.actionBuilder(drive.pose)
-                .lineToY(-10)
-                .waitSeconds(1)
-                .turn(Math.toRadians(90))
-                .splineTo(new Vector2d(-64 ,-70), Math.toRadians(-90))
-                .build();*/
-
-        Action trajectoryAction1 = drive.actionBuilder(drive.pose)
-                .splineTo (new Vector2d(56,  -40), Math.toRadians(90))
-                .waitSeconds(1)
-                .splineTo (new Vector2d(57, 38), Math.toRadians(90))
-                .turn(Math. toRadians(180))
-                .splineTo (new Vector2d(32, -44), Math. toRadians(180))
-                .splineToLinearHeading(new Pose2d(-43, -50, Math.toRadians(-110)), Math.toRadians(180))
-                .build();
-
-
 
 
         waitForStart();
 
-        if (isStopRequested()) return;
-        Actions.runBlocking(
-                new SequentialAction(
-                        trajectoryAction1
-                )
-        );
+
     }
 }
