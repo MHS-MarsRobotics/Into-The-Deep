@@ -44,8 +44,12 @@ public class Auton_1 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Action trajectoryAction1 = drive.actionBuilder(drive.pose)
-                .splineTo(new Vector2d(-35, -35), Math.toRadians(90))
+                .lineToY(-10)
+                .waitSeconds(1)
+                .turn(Math.toRadians(90))
+                .splineTo(new Vector2d(-64 ,-70), Math.toRadians(-90))
                 .build();
+
 
 
 
