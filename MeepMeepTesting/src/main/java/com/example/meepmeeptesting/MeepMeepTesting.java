@@ -26,6 +26,12 @@ public class MeepMeepTesting {
                                 .waitSeconds(0.5)
                                 .turn(Math.toRadians(-90))
                                 .splineTo(new Vector2d(42 ,-70), Math.toRadians(-90))
+                                .back(60)
+                                .turn(Math.toRadians(90))
+                                .splineTo(new Vector2d(52 ,-70), Math.toRadians(-90))
+                                .back(60)
+                                .turn(Math.toRadians(90))
+                                .splineTo(new Vector2d(62 ,-70), Math.toRadians(-90))
                                 .build()
                 );
 
