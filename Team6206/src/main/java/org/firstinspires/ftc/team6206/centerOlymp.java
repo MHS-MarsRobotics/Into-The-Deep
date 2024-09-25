@@ -1,18 +1,13 @@
 package org.firstinspires.ftc.team6206;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import com.qualcomm.robotcore.hardware.IMU;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 
@@ -28,11 +23,8 @@ public class centerOlymp extends LinearOpMode {
         DcMotor motorBackLeft = hardwareMap.dcMotor.get("left motor 2");
         DcMotor motorFrontRight = hardwareMap.dcMotor.get("right motor 1");
         DcMotor motorBackRight = hardwareMap.dcMotor.get("right motor 2");
-        DcMotor pully = hardwareMap.dcMotor.get("pully");
-        DcMotor wench = hardwareMap.dcMotor.get("wench");
-        DcMotor intake = hardwareMap.dcMotor.get("intake");
-        Servo liftL = hardwareMap.servo.get("liftL");
-        Servo liftR = hardwareMap.servo.get("liftR");
+
+
 
 
         // Reverse the right side motors
@@ -103,49 +95,6 @@ imu.initialize(myIMUparameters);
                 motorFrontRight.setPower(frontRightPower/2);
                 motorFrontLeft.setPower(frontLeftPower/2);
             }
-
-                if (gamepad2. left_trigger>0){
-                    pully.setPower(-100);
-
-                }
-                else if (gamepad2.right_trigger>0){
-                    pully.setPower(100);
-                }
-                else {
-                    pully.setPower(0);
-                }
-                if (gamepad2.left_bumper){
-                    wench.setPower(-100);
-                } else if (gamepad2.right_bumper) {
-                    wench.setPower(100);
-                }
-                else wench.setPower(0);
-
-
-            if (gamepad2.a){
-                liftL.setPosition(.825);
-                liftR.setPosition(.1);
-                }
-                if (gamepad2.x){
-                  liftL.setPosition(.7);
-                  liftR.setPosition(.25);                                                                               
-
-                }
-
-            if (gamepad2.dpad_up){
-                intake.setPower(2);
-            }
-            else if (gamepad2.dpad_down){
-                intake.setPower(-2);
-            }
-            else{
-            intake.setPower(0);}
-
-
-
-
-
-
         }
     }
 }
