@@ -53,13 +53,19 @@ public class Auton_1 extends LinearOpMode {
                 .build();*/
 
         Action trajectoryAction1 = drive.actionBuilder(drive.pose)
-                .splineTo (new Vector2d(56,  -40), Math.toRadians(90))
+               //.lineToX(32)
+                .lineToY(-10)
+                .waitSeconds(0.5)
+                .turn(Math.toRadians(-90))
+                .splineTo(new Vector2d(42 ,-70), Math.toRadians(-90))
+                .build();
+                /*.splineTo (new Vector2d(56,  -40), Math.toRadians(90))
                 .waitSeconds(1)
                 .splineTo (new Vector2d(57, 38), Math.toRadians(90))
                 .turn(Math. toRadians(180))
                 .splineTo (new Vector2d(32, -44), Math. toRadians(180))
                 .splineToLinearHeading(new Pose2d(-43, -50, Math.toRadians(-110)), Math.toRadians(180))
-                .build();
+                .build();*/
 
 
 

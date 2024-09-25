@@ -21,15 +21,15 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-35, -62, Math.toRadians(90)))
-                                .lineTo(new Vector2d(-35,-10))
-                                .waitSeconds(1)
-                                .turn(Math.toRadians(90))
-                                .splineTo(new Vector2d(-64 ,-70), Math.toRadians(-90))
+                        drive.trajectorySequenceBuilder(new Pose2d(32, -62, Math.toRadians(90)))
+                                .lineTo(new Vector2d(32,-10))
+                                .waitSeconds(0.5)
+                                .turn(Math.toRadians(-90))
+                                .splineTo(new Vector2d(42 ,-70), Math.toRadians(-90))
                                 .build()
                 );
 
-        RoadRunnerBotEntity mySecondBot = new DefaultBotBuilder(meepMeep)
+        /*RoadRunnerBotEntity mySecondBot = new DefaultBotBuilder(meepMeep)
                 // We set this bot to be red
                 .setColorScheme(new ColorSchemeRedDark()).setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35, -62, Math.toRadians(90)))
@@ -40,7 +40,7 @@ public class MeepMeepTesting {
                         .turn(Math. toRadians(180))
                         .splineTo (new Vector2d(32, -44), Math. toRadians(180))
                         .splineToLinearHeading(new Pose2d(-43, -50, Math.toRadians(-110)), Math.toRadians(180))
-                        .build());
+                        .build());*/
 
 
 
@@ -57,7 +57,7 @@ public class MeepMeepTesting {
 //  <following code you were using previously>
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
-                .addEntity(myBot).addEntity(mySecondBot).start()
+                .addEntity(myBot)//.addEntity(mySecondBot).start()
                 .start();
     }
 }
