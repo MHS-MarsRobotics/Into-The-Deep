@@ -25,13 +25,13 @@ public class MeepMeepTesting {
                                 .lineTo(new Vector2d(32,-10))
                                 .waitSeconds(0.5)
                                 .turn(Math.toRadians(-90))
-                                .splineTo(new Vector2d(42 ,-70), Math.toRadians(-90))
-                                .back(60)
+                                .splineTo(new Vector2d(42 ,-60), Math.toRadians(-90))
+                                .back(50)
                                 .turn(Math.toRadians(90))
-                                .splineTo(new Vector2d(52 ,-70), Math.toRadians(-90))
-                                .back(60)
+                                .splineTo(new Vector2d(52 ,-60), Math.toRadians(-90))
+                                .back(50)
                                 .turn(Math.toRadians(90))
-                                .splineTo(new Vector2d(62 ,-70), Math.toRadians(-90))
+                                .splineTo(new Vector2d(62 ,-60), Math.toRadians(-90))
                                 .build()
                 );
 
