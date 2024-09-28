@@ -14,13 +14,34 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class test_delay extends LinearOpMode {
 
     double time = 0;
-
-
     
     @Override
     public void runOpMode() throws InterruptedException {
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(35, -62, Math.toRadians(90)));
 
+        long waitTime = 250;
+
+
+        while (opModeInInit()){
+            telemetry.addData("Delay",time + "sec(s)");
+            if (gamepad1.left_trigger>.5){
+                time += .5;
+                telemetry.update();
+
+                sleep(waitTime);
+            } else if (gamepad1.right_trigger>.5){
+                time -= .5;
+
+                time = Math.max(0, time);
+
+                telemetry.update();
+
+                sleep(waitTime);
+            } else {
+                telemetry.update();
+            }
+
+        }
         /*
         Action trajectoryAction1 = drive.actionBuilder(drive.pose)
                 .lineToY(-10)
