@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.team6206;
 
+import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -10,13 +11,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Config
-@Autonomous(name = "Delayed Auto", group = "Autonomous")
-public class test_delay extends LinearOpMode {
+@Autonomous(name = "Red Auto", group = "Autonomous")
+public class Observation extends LinearOpMode {
 
     double time = 0;
 
 
-    
+
     @Override
     public void runOpMode() throws InterruptedException {
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(35, -62, Math.toRadians(90)));
@@ -45,15 +46,26 @@ public class test_delay extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-43, -50, Math.toRadians(-110)), Math.toRadians(180))
                 .build();*/
 
-
-
+        Action trajectoryAction2 = drive.actionBuilder(drive.pose)
+                .lineToY(-10)
+                .waitSeconds(0.5)
+                .turn(Math.toRadians(90))
+                .splineTo(new Vector2d(10 ,-60), Math.toRadians(180))
+                .turn(Math.toRadians(90))
+                .lineToY(-10)
+                .turn(Math.toRadians(-90))
+                .splineTo(new Vector2d(10 ,-60), Math.toRadians(-90))
+                .lineToY(-10)
+                .turn(Math.toRadians(-90))
+                .splineTo(new Vector2d(10 ,-60), Math.toRadians(-90))
+                        .build();
 
         waitForStart();
-
+        trajectoryAction2.preview(new Canvas());
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(
-                        trajectoryAction1
+                        trajectoryAction2
                 )
         );
     }
