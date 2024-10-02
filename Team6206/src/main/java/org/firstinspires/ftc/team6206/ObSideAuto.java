@@ -34,17 +34,8 @@ public class ObSideAuto extends LinearOpMode {
                 .lineToY(-10)
                 .turn(Math.toRadians(90))
                 .splineTo(new Vector2d(62 ,-58), Math.toRadians(-90))
-                .lineToY(-10)
-                .turn(Math.toRadians(90))
-                .splineTo(new Vector2d(77 ,-58), Math.toRadians(-90))
                 .build();
-                /*.splineTo (new Vector2d(56,  -40), Math.toRadians(90))
-                .waitSeconds(1)
-                .splineTo (new Vector2d(57, 38), Math.toRadians(90))
-                .turn(Math. toRadians(180))
-                .splineTo (new Vector2d(32, -44), Math. toRadians(180))
-                .splineToLinearHeading(new Pose2d(-43, -50, Math.toRadians(-110)), Math.toRadians(180))
-                .build();*/
+
 
         long waitTime = 250;
 
