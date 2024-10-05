@@ -48,7 +48,7 @@ public class MeepMeepTesting {
                         .splineToLinearHeading(new Pose2d(-43, -50, Math.toRadians(-110)), Math.toRadians(180))
                         .build());*/
 
-        RoadRunnerBotEntity myBot2 = new DefaultBotBuilder(meepMeep)
+        /*RoadRunnerBotEntity myBot2 = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
@@ -71,6 +71,8 @@ public class MeepMeepTesting {
                                 .build()
                 );
 
+         */
+
 
         Image img = null;
         try {
@@ -84,7 +86,8 @@ public class MeepMeepTesting {
 //  <following code you were using previously>
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
-                .addEntity(myBot).addEntity(myBot2).start()
+                .addEntity(myBot)
+                //.addEntity(myBot2).start()
                 .start();
     }
 }

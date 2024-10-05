@@ -16,15 +16,15 @@ public class MeepMeepTestingV2 {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(700);
 
-        RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
+          RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-32, -62, Math.toRadians(90)))
-                                .lineTo(new Vector2d(-32,-10))
+                        drive.trajectorySequenceBuilder(new Pose2d(32, -62, Math.toRadians(180)))
+                                /*.lineTo(new Vector2d(-32,-10))
                                 .waitSeconds(0.5)
                                 .turn(Math.toRadians(90))
-                                .splineTo(new Vector2d(10 ,-60), Math.toRadians(180))
+                                .splineTo(new Vector2d(-32 ,-60), Math.toRadians(180))
                                 .turn(Math.toRadians(90))
                                 .back(60)
                                 .turn(Math.toRadians(-90))
@@ -33,10 +33,9 @@ public class MeepMeepTestingV2 {
                                 .turn(Math.toRadians(-90))
                                 .splineTo(new Vector2d(-52 ,-60), Math.toRadians(-90))
 
-                                .build());
+                               */
 
-
-          /*    .lineTo(new Vector2d(0,-37))
+                               /* .lineTo(new Vector2d(0,-37))
                                 .waitSeconds(0.5)
                                 .lineTo(new Vector2d(0,-39))
                                 .lineTo(new Vector2d(48, -39))
@@ -49,7 +48,34 @@ public class MeepMeepTestingV2 {
                                 .waitSeconds(0.5)
                                 .lineToLinearHeading(new Pose2d(58, -36, Math.toRadians(90)))
                                 .waitSeconds(0.5)
-                                .lineToLinearHeading(new Pose2d(-58,-55, Math.toRadians(180)))*/
+                                .lineToLinearHeading(new Pose2d(-58,-55, Math.toRadians(180)))
+
+                                */
+
+                               /* .strafeTo(new Vector2d(8,-34 ))
+                                .back(10)
+                                .strafeTo(new Vector2d(38,-62))
+                                .strafeTo(new Vector2d(34,-10))
+                                .waitSeconds(0.5)
+                                .turn(Math.toRadians(-90))
+                                .splineTo(new Vector2d(42 ,-60), Math.toRadians(-90))
+                                .back(50)
+                                .turn(Math.toRadians(90))
+                                .splineTo(new Vector2d(52 ,-60), Math.toRadians(-90))
+                                .back(50)
+                                .turn(Math.toRadians(90))
+                                .splineTo(new Vector2d(62 ,-60), Math.toRadians(-90))
+
+                                */
+
+                                .splineTo(new Vector2d(8,-34 ), Math.toRadians(90))
+                                .splineToConstantHeading(new Vector2d(8,-38 ), Math.toRadians(90))
+                                .splineToLinearHeading(new Pose2d(38, -48 , Math.toRadians(90))  ,Math.toRadians(0))
+                                .splineToConstantHeading(new Vector2d(46, -6), Math.toRadians(0) )
+
+
+
+ .build());
 
 
         /*RoadRunnerBotEntity mySecondBot = new DefaultBotBuilder(meepMeep)
