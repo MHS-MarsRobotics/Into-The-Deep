@@ -41,7 +41,7 @@ public class MeepMeepTesting2 {
                 .strafeTo(new Vector2d(44,-24))
                 .waitSeconds(1)
                 .strafeTo(new Vector2d(44,-62))
-                .waitSeconds(5)
+                .waitSeconds(15)
                 .build());
 
         myBot2.runAction(myBot2.getDrive().actionBuilder(new Pose2d(-6, -62, Math.toRadians(90)))
@@ -55,12 +55,19 @@ public class MeepMeepTesting2 {
                         .turn(Math.toRadians(90))
                         .strafeTo(new Vector2d(-37,-24))
                         .waitSeconds(3)
-                        //.strafeTo(new Vector2d(-32,-24))
                         .turn(Math.toRadians(45))
                         .strafeTo(new Vector2d(-52,-52))
                         .turn(Math.toRadians(-45))
                         .strafeTo(new Vector2d(-47,-52))
                         .strafeTo(new Vector2d(-47,-24))
+                        .waitSeconds(3)
+                        .turn(Math.toRadians(45))
+                        .strafeTo(new Vector2d(-52,-52))
+                        .turn(Math.toRadians(-45))
+                        .strafeTo(new Vector2d(-57,-24))
+                        .waitSeconds(3)
+                        .turn(Math.toRadians(45))
+                        .strafeTo(new Vector2d(-52,-52))
 
                 .build());
         Image img = null;

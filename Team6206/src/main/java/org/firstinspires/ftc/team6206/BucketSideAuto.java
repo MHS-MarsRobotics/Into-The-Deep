@@ -13,10 +13,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class BucketSideAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(32, -62, Math.toRadians(90)));
+        Pose2d action1Starting = new Pose2d(32, -62, Math.toRadians(90));
+        Pose2d action2Starting = new Pose2d(-6, -62, Math.toRadians(90));
+        MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, action2Starting);
 
 
-        Action trajectoryAction1 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+        Action trajectoryAction1 = mecanumDrive.actionBuilder(action2Starting)
                 .waitSeconds(1)
                 .strafeTo(new Vector2d(0,-45))
                 .waitSeconds(2)
@@ -34,12 +36,39 @@ public class BucketSideAuto extends LinearOpMode {
                 .waitSeconds(1)
                 .build();
 
+        Action trajectoryAction2 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+                        .waitSeconds(1)
+                        .strafeTo(new Vector2d(-6,-34))
+                        .waitSeconds(1)
+                        .strafeTo(new Vector2d(-6,-50))
+                        .waitSeconds(1)
+                        .splineTo(new Vector2d(-32,-24),Math.toRadians(90))
+                        .waitSeconds(1)
+                        .turn(Math.toRadians(90))
+                        .strafeTo(new Vector2d(-37,-24))
+                        .waitSeconds(3)
+                        .turn(Math.toRadians(45))
+                        .strafeTo(new Vector2d(-52,-52))
+                        .turn(Math.toRadians(-45))
+                        .strafeTo(new Vector2d(-47,-52))
+                        .strafeTo(new Vector2d(-47,-24))
+                        .waitSeconds(3)
+                        .turn(Math.toRadians(45))
+                        .strafeTo(new Vector2d(-52,-52))
+                        .turn(Math.toRadians(-45))
+                        .strafeTo(new Vector2d(-57,-24))
+                        .waitSeconds(3)
+                        .turn(Math.toRadians(45))
+                        .strafeTo(new Vector2d(-52,-52))
+
+                .build();
+
         waitForStart();
 
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(
-                        trajectoryAction1
+                        trajectoryAction2
                 )
         );
     }
