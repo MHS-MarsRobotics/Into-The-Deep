@@ -35,7 +35,32 @@ public class ObSideAuto extends LinearOpMode {
                 .turn(Math.toRadians(90))
                 .splineTo(new Vector2d(62 ,-58), Math.toRadians(-90))
                 .build();
-
+        Action trajectoryAction2 = drive.actionBuilder(new Pose2d(32, -62, Math.toRadians(90)))
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(6,-34))
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(6,-50))
+                .waitSeconds(1)
+                .splineTo(new Vector2d(37,-22),Math.toRadians(90))
+                .waitSeconds(1)
+                .turn(Math.toRadians(-90))
+                .strafeTo(new Vector2d(37,-24))
+                .waitSeconds(3)
+                .turn(Math.toRadians(-45))
+                .strafeTo(new Vector2d(52,-52))
+                .turn(Math.toRadians(45))
+                .strafeTo(new Vector2d(47,-52))
+                .strafeTo(new Vector2d(47,-24))
+                .waitSeconds(3)
+                .turn(Math.toRadians(-45))
+                .strafeTo(new Vector2d(52,-52))
+                .turn(Math.toRadians(45))
+                .strafeTo(new Vector2d(57,-24))
+                .waitSeconds(3)
+                .strafeTo(new Vector2d(52,-60))
+                .waitSeconds(2)
+                .turn(Math.toRadians(90))
+                .build();
 
         long waitTime = 250;
 
@@ -67,7 +92,7 @@ public class ObSideAuto extends LinearOpMode {
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(
-                        trajectoryAction1
+                        trajectoryAction2
                 )
         );
     }

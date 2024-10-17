@@ -14,7 +14,7 @@ public class BucketSideAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d action1Starting = new Pose2d(32, -62, Math.toRadians(90));
-        Pose2d action2Starting = new Pose2d(-6, -62, Math.toRadians(90));
+        Pose2d action2Starting = new Pose2d(-30, -64, Math.toRadians(90));
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, action2Starting);
 
 
@@ -37,30 +37,29 @@ public class BucketSideAuto extends LinearOpMode {
                 .build();
 
         Action trajectoryAction2 = mecanumDrive.actionBuilder(mecanumDrive.pose)
-                        .waitSeconds(1)
-                        .strafeTo(new Vector2d(-6,-34))
-                        .waitSeconds(1)
-                        .strafeTo(new Vector2d(-6,-50))
-                        .waitSeconds(1)
-                        .splineTo(new Vector2d(-32,-24),Math.toRadians(90))
-                        .waitSeconds(1)
-                        .turn(Math.toRadians(90))
-                        .strafeTo(new Vector2d(-37,-24))
-                        .waitSeconds(3)
-                        .turn(Math.toRadians(45))
-                        .strafeTo(new Vector2d(-52,-52))
-                        .turn(Math.toRadians(-45))
-                        .strafeTo(new Vector2d(-47,-52))
-                        .strafeTo(new Vector2d(-47,-24))
-                        .waitSeconds(3)
-                        .turn(Math.toRadians(45))
-                        .strafeTo(new Vector2d(-52,-52))
-                        .turn(Math.toRadians(-45))
-                        .strafeTo(new Vector2d(-57,-24))
-                        .waitSeconds(3)
-                        .turn(Math.toRadians(45))
-                        .strafeTo(new Vector2d(-52,-52))
-
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(-6,-34))
+                .waitSeconds(1)
+                .strafeTo(new Vector2d(-6,-50))
+                .waitSeconds(1)
+                .splineTo(new Vector2d(-37,-22),Math.toRadians(90))
+                .waitSeconds(1)
+                .turn(Math.toRadians(90))
+                .strafeTo(new Vector2d(-37,-24))
+                .waitSeconds(3)
+                .turn(Math.toRadians(45))
+                .strafeTo(new Vector2d(-52,-52))
+                .turn(Math.toRadians(-45))
+                .strafeTo(new Vector2d(-47,-52))
+                .strafeTo(new Vector2d(-47,-24))
+                .waitSeconds(3)
+                .turn(Math.toRadians(45))
+                .strafeTo(new Vector2d(-52,-52))
+                .turn(Math.toRadians(-45))
+                .strafeTo(new Vector2d(-57,-24))
+                .waitSeconds(3)
+                .turn(Math.toRadians(45))
+                .strafeTo(new Vector2d(-52,-52))
                 .build();
 
         waitForStart();
