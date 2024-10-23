@@ -16,16 +16,10 @@ public class ObSideAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(35, -62, Math.toRadians(90)));
-        /*
-        Action trajectoryAction1 = drive.actionBuilder(drive.pose)
-                .lineToY(-10)
-                .waitSeconds(1)
-                .turn(Math.toRadians(90))
-                .splineTo(new Vector2d(-64 ,-70), Math.toRadians(-90))
-                .build();*/
 
-        Action trajectoryAction1 = drive.actionBuilder(drive.pose)
-               //.lineToX(32)
+
+       /* Action trajectoryAction1 = drive.actionBuilder(drive.pose)
+                .lineToX(32)
                 .waitSeconds(time)
                 .lineToY(-10)
                 .waitSeconds(time)
@@ -35,27 +29,30 @@ public class ObSideAuto extends LinearOpMode {
                 .turn(Math.toRadians(90))
                 .splineTo(new Vector2d(62 ,-58), Math.toRadians(-90))
                 .build();
+
+        */
+
         Action trajectoryAction2 = drive.actionBuilder(new Pose2d(32, -62, Math.toRadians(90)))
                 .waitSeconds(1)
                 .strafeTo(new Vector2d(6,-34))
                 .waitSeconds(1)
                 .strafeTo(new Vector2d(6,-50))
                 .waitSeconds(1)
-                .splineTo(new Vector2d(37,-22),Math.toRadians(90))
+                .splineTo(new Vector2d(37,-20),Math.toRadians(90))
                 .waitSeconds(1)
                 .turn(Math.toRadians(-90))
-                .strafeTo(new Vector2d(37,-24))
+                .strafeTo(new Vector2d(37,-20))
                 .waitSeconds(3)
                 .turn(Math.toRadians(-45))
                 .strafeTo(new Vector2d(52,-52))
                 .turn(Math.toRadians(45))
                 .strafeTo(new Vector2d(47,-52))
-                .strafeTo(new Vector2d(47,-24))
+                .strafeTo(new Vector2d(47,-20))
                 .waitSeconds(3)
                 .turn(Math.toRadians(-45))
                 .strafeTo(new Vector2d(52,-52))
                 .turn(Math.toRadians(45))
-                .strafeTo(new Vector2d(57,-24))
+                .strafeTo(new Vector2d(57,-20))
                 .waitSeconds(3)
                 .strafeTo(new Vector2d(52,-60))
                 .waitSeconds(2)
