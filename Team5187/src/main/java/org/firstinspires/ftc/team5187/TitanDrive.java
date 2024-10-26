@@ -1,22 +1,20 @@
-package org.firstinspires.ftc.team6206;
+package org.firstinspires.ftc.team5187;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 
-@TeleOp(name = "Olymp Drive")
-public class centerOlymp extends LinearOpMode {
+@TeleOp(name = "Titan Drive")
+public class TitanDrive extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -25,11 +23,7 @@ public class centerOlymp extends LinearOpMode {
         DcMotor motorBackLeft = null;
         DcMotor motorFrontRight = null;
         DcMotor motorBackRight = null;
-        DcMotor lift = null;
-        DcMotor tilt = null;
-        Servo bucket = null;
-        CRServo intake = null;
-        Servo intake_angle = null;
+
 
         // Declare our motors
         // Make sure your ID's match your configuration
@@ -38,11 +32,6 @@ public class centerOlymp extends LinearOpMode {
             motorBackLeft = hardwareMap.dcMotor.get("left motor 2");
             motorFrontRight = hardwareMap.dcMotor.get("right motor 1");
             motorBackRight = hardwareMap.dcMotor.get("right motor 2");
-            lift = hardwareMap.dcMotor.get("lift");
-            tilt = hardwareMap.dcMotor.get("tilt");
-            bucket = hardwareMap.servo.get("bucket");
-            intake = hardwareMap.crservo.get("intake");
-            intake_angle = hardwareMap.servo.get("angle");
         } catch(IllegalArgumentException e) {
             // Keep going, even if the hardware map doesn't exist
             telemetry.addData("Missing hardware map: ", e.getMessage());
@@ -116,24 +105,6 @@ public class centerOlymp extends LinearOpMode {
                 motorBackRight.setPower(backRightPower/2);
                 motorFrontRight.setPower(frontRightPower/2);
                 motorFrontLeft.setPower(frontLeftPower/2);
-            }
-
-            if (gamepad2.dpad_up){
-                bucket.setPosition(0.01);
-            }
-            if (gamepad2.dpad_down){
-                bucket.setPosition(.5);
-            }
-
-            if (gamepad2.x) {
-                intake.setDirection(DcMotorSimple.Direction.FORWARD);
-                intake.setPower(1.0);
-            }
-             else if (gamepad2.a) {
-                intake.setDirection(DcMotorSimple.Direction.REVERSE);
-                intake.setPower(1.0);
-            } else {
-                intake.setPower(0);
             }
         }
     }

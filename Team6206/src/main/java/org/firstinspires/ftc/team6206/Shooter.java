@@ -17,22 +17,20 @@ public class Shooter {
         motor = hardwareMap.get(DcMotor.class, "pulley");
     }
 
-    public class SpinUp implements Action {
-        private boolean initialized = false;
+    public  Action spinUp () {
+        return new Action() {
+            private boolean initialized = false;
 
-        @Override
-        public boolean run(@NonNull TelemetryPacket packet) {
-            if (!initialized) {
-                motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                motor.setTargetPosition(25);
-                motor.setPower(0.8);
-                initialized = true;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    motor.setTargetPosition(25);
+                    motor.setPower(0.8);
+                    initialized = true;
+                }
+                return motor.isBusy();
             }
-            return motor.isBusy();
-        }
-    }
-
-    public Action spinUp() {
-        return new SpinUp();
+        };
     }
 }
