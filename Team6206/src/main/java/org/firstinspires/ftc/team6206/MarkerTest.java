@@ -19,8 +19,6 @@ public class MarkerTest extends LinearOpMode {
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, action2Starting);
         OlmpyActions oActions = new OlmpyActions(hardwareMap);
 
-
-
         Action trajectoryAction2 = mecanumDrive.actionBuilder(mecanumDrive.pose)
                 .waitSeconds(1)
                 .strafeTo(new Vector2d(-6,-34))
