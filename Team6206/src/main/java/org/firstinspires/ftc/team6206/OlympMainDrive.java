@@ -14,6 +14,22 @@
 
         @TeleOp(name = "Main Olymp Drive")
         public class OlympMainDrive extends LinearOpMode {
+
+            static final double TICKS_PER_INCH = 125;
+            static final int INIT_POSITION = 60;
+
+            private void runToPosition(DcMotor motor, double target) {
+                if (Math.abs(target - motor.getCurrentPosition()) < 20) {
+                    motor.setPower(0.001);
+                }
+                else {
+                    motor.setPower(0.5);
+                }
+
+                motor.setTargetPosition((int)target);
+                motor.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Can't hurt to call this repeatedly
+            }
+
             @Override
             public void runOpMode() throws InterruptedException {
                 // Declare our motors
@@ -31,8 +47,12 @@
                 // If your robot moves backwards when commanded to go forwards,
                 // reverse the left side instead.
                 // See the note about this earlier on this page.
-                frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-                backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+                frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+                backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+                lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                tilt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
                 // Retrieve the IMU from the hardware map
                 IMU imu = hardwareMap.get(IMU.class, "imu");
@@ -43,14 +63,29 @@
                 // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
                 imu.initialize(parameters);
 
-                waitForStart();
+
+                while (opModeInInit()) {
+                    double position = tilt.getCurrentPosition();
+
+                    runToPosition(tilt, INIT_POSITION);
+
+                    telemetry.addData("Tilt Encoder Position", position);
+                    // Show the target position of the armMotor on telemetry
+                    telemetry.addData("Desired Tilt Position", tilt.getTargetPosition());
+                    telemetry.addData("Tilt Power", tilt.getPower());
+
+                    telemetry.update();
+                }
+
+
+//                waitForStart();
 
                 if (isStopRequested()) return;
 
                 while (opModeIsActive()) {
                     double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-                    double x = gamepad1.left_stick_x;
-                    double rx = gamepad1.right_stick_x;
+                    double x = -gamepad1.left_stick_x;
+                    double rx = -gamepad1.right_stick_x;
 
                     // This button choice was made so that it is hard to hit on accident,
                     // it can be freely changed based on preference.
@@ -111,23 +146,17 @@
                         lift.setPower(0.3);
                     }
                     if (gamepad2.y) {
-                        lift.setTargetPosition(10);
+                        lift.setTargetPosition((int)TICKS_PER_INCH * 28);
                         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         lift.setPower(0.3);
                     }
                     if (gamepad2.left_trigger>0) {
-                        tilt.setTargetPosition(0);
-                        tilt.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        tilt.setPower(0.3);
+                        runToPosition(tilt, 0);
                     }
                     if (gamepad2.right_trigger>0) {
-                        tilt.setTargetPosition(160);
-                        tilt.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        tilt.setPower(0.3);
+                        runToPosition(tilt, 160);
                     } else {
-                        tilt.setTargetPosition(80);
-                        tilt.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        tilt.setPower(0.3);
+//                        runToPosition(tilt, 80);
                     }
 
 
@@ -139,16 +168,13 @@
                     }
 
 
-                    double position = tilt.getCurrentPosition();
 
-                    // Get the target position of the armMotor
-                    double desiredPosition = tilt.getTargetPosition();
 
                     // Show the position of the armMotor on telemetry
-                    telemetry.addData("Encoder Position", position);
+                    telemetry.addData("Encoder Position", tilt.getCurrentPosition());
 
                     // Show the target position of the armMotor on telemetry
-                    telemetry.addData("Desired Position", desiredPosition);
+                    telemetry.addData("Desired Position", tilt.getTargetPosition());
 
                     telemetry.update();
                 }
