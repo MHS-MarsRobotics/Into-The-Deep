@@ -16,14 +16,14 @@
         public class OlympMainDrive extends LinearOpMode {
 
             static final double TICKS_PER_INCH = 125;
-            static final int INIT_POSITION = 60;
+            static final int INIT_POSITION = 80;
 
             private void runToPosition(DcMotor motor, double target) {
                 if (Math.abs(target - motor.getCurrentPosition()) < 20) {
                     motor.setPower(0.001);
                 }
                 else {
-                    motor.setPower(0.5);
+                    motor.setPower(0.3);
                 }
 
                 motor.setTargetPosition((int)target);
@@ -52,6 +52,7 @@
 
                 lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 tilt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                tilt.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
                 // Retrieve the IMU from the hardware map
@@ -67,7 +68,11 @@
                 while (opModeInInit()) {
                     double position = tilt.getCurrentPosition();
 
-                    runToPosition(tilt, INIT_POSITION);
+//                    runToPosition(tilt, INIT_POSITION);
+//                    bucket.setPosition(.7);
+//                    intake_angle.setPosition(.6);
+
+
 
                     telemetry.addData("Tilt Encoder Position", position);
                     // Show the target position of the armMotor on telemetry
@@ -125,10 +130,10 @@
                     }
 
                     if (gamepad2.dpad_up) {
-                        bucket.setPosition(0.01);
+                        bucket.setPosition(0.8 );
                     }
                     if (gamepad2.dpad_down) {
-                        bucket.setPosition(.5);
+                        bucket.setPosition(1);
                     }
 
                     if (gamepad2.x) {
@@ -141,7 +146,7 @@
                         intake.setPower(0);
                     }
                     if (gamepad2.b) {
-                        lift.setTargetPosition(0);
+                        lift.setTargetPosition((int)TICKS_PER_INCH * 4);
                         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         lift.setPower(0.3);
                     }
@@ -151,14 +156,11 @@
                         lift.setPower(0.3);
                     }
                     if (gamepad2.left_trigger>0) {
-                        runToPosition(tilt, 0);
+                        tilt.setPower(0.5);
                     }
                     if (gamepad2.right_trigger>0) {
-                        runToPosition(tilt, 160);
-                    } else {
-//                        runToPosition(tilt, 80);
+                        tilt.setPower(-0.5);
                     }
-
 
                     if (gamepad2.dpad_left) {
                         intake_angle.setPosition(0);
