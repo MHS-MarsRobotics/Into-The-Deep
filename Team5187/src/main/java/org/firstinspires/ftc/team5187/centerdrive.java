@@ -21,8 +21,6 @@ public class centerdrive extends LinearOpMode {
         DcMotor motorBackLeft = hardwareMap.dcMotor.get("left motor 2");
         DcMotor motorFrontRight = hardwareMap.dcMotor.get("right motor 1");
         DcMotor motorBackRight = hardwareMap.dcMotor.get("right motor 2");
-        winch = hardwareMap.dcMotor.get("wench");
-        pulley = hardwareMap.dcMotor.get("pulley");
 
         // Reverse the right side motors
         // Reverse left motors if you are using NeveRests
@@ -72,22 +70,6 @@ public class centerdrive extends LinearOpMode {
                 motorFrontRight.setPower(frontRightPower/2);
                 motorFrontLeft.setPower(frontLeftPower/2);
             }
-
-                if (gamepad2. left_trigger>0){
-                    pulley.setPower(-100);
-                    winch.setPower(100);
-                }
-                else if (gamepad2.right_trigger>0){
-                    winch.setPower(-100);
-                    pulley.setPower(100);
-                }
-                else {
-                    winch.setPower(0);
-                    pulley.setPower(0);
-                }
-
-
-
         }
     }
 }
