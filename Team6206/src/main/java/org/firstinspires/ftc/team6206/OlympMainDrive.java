@@ -129,13 +129,21 @@
                         frontLeftMotor.setPower(frontLeftPower / 2);
                     }
 
-                    if (gamepad2.dpad_up) {
+                    if (gamepad2.b) {
                         bucket.setPosition(0.8 );
                     }
-                    if (gamepad2.dpad_down) {
+                    if (gamepad2.y) {
                         bucket.setPosition(1);
                     }
-
+                    if (gamepad2.dpad_down) {
+                        lift.setTargetPosition((int)TICKS_PER_INCH * 4);
+                        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        lift.setPower(0.3);
+                    }
+                    if (gamepad2.dpad_up) {
+                        lift.setTargetPosition((int)TICKS_PER_INCH * 31);
+                        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        lift.setPower(0.3);
                     if (gamepad2.x) {
                         intake.setDirection(DcMotorSimple.Direction.FORWARD);
                         intake.setPower(1.0);
@@ -145,21 +153,16 @@
                     } else {
                         intake.setPower(0);
                     }
-                    if (gamepad2.b) {
-                        lift.setTargetPosition((int)TICKS_PER_INCH * 4);
-                        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        lift.setPower(0.3);
-                    }
-                    if (gamepad2.y) {
-                        lift.setTargetPosition((int)TICKS_PER_INCH * 28);
-                        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        lift.setPower(0.3);
+
                     }
                     if (gamepad2.left_trigger>0) {
-                        tilt.setPower(0.5);
+                        tilt.setPower(0.8);
                     }
-                    if (gamepad2.right_trigger>0) {
-                        tilt.setPower(-0.5);
+                    else if (gamepad2.right_trigger>0) {
+                        tilt.setPower(-0.8);
+                    }
+                    else {
+                        tilt.setPower(0);
                     }
 
                     if (gamepad2.dpad_left) {
