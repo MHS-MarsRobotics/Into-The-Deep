@@ -135,9 +135,9 @@
 
 
                     if (gamepad2.left_trigger > 0) {
-                        tilt.setPower(0.8);
+                        tilt.setPower(0.5);
                     } else if (gamepad2.right_trigger > 0) {
-                        tilt.setPower(-0.8);
+                        tilt.setPower(-0.5);
                     } else {
                         tilt.setPower(0);
                     }
