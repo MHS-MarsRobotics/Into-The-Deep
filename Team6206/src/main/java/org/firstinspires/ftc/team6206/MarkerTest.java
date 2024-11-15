@@ -14,18 +14,18 @@ public class MarkerTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d action1Starting = new Pose2d(32, -62, Math.toRadians(90));
-        Pose2d action2Starting = new Pose2d(-30, -64, Math.toRadians(90));
+        Pose2d action1Starting = new Pose2d(32, -62, Math.toRadians(0));
+        Pose2d action2Starting = new Pose2d(-30, -64, Math.toRadians(0));
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, action2Starting);
         OlmpyActions oActions = new OlmpyActions(hardwareMap);
 
         Action trajectoryAction2 = mecanumDrive.actionBuilder(mecanumDrive.pose)
                 .waitSeconds(1)
-                .strafeTo(new Vector2d(-6,-34))
+                .strafeTo(new Vector2d(-52,-62))
                 .build();
 
         Action trajectoryAction1 = mecanumDrive.actionBuilder(mecanumDrive.pose)
-                .strafeTo(new Vector2d(32,-45))
+                .strafeTo(new Vector2d(-30,-64))
                 .waitSeconds(1)
                 .build();
 
@@ -36,8 +36,11 @@ public class MarkerTest extends LinearOpMode {
                 new SequentialAction(
                         trajectoryAction2,
                         oActions.liftUp(),
+                        oActions.drop(),
+                        trajectoryAction1,
                         oActions.liftDown(),
-                        trajectoryAction1
+                        oActions.up()
+
                 )
         );
     }

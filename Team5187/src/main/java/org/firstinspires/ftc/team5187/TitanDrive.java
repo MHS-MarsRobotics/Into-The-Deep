@@ -14,6 +14,8 @@ import org.firstinspires.ftc.robotcore.internal.camera.delegating.DelegatingCapt
 
 @TeleOp(name = "Titan main drive")
 public class TitanDrive extends LinearOpMode {
+
+
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
@@ -34,6 +36,9 @@ public class TitanDrive extends LinearOpMode {
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        basearm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        midjoint.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
         // Adjust the orientation parameters to match your robot
@@ -43,11 +48,15 @@ public class TitanDrive extends LinearOpMode {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
 
-        telemetry.addData("base current Position", basearm.getCurrentPosition());
 
-        telemetry.addData("mid current Position", midjoint.getCurrentPosition());
+        while (opModeInInit()) {
+            telemetry.addData("base current Position", basearm.getCurrentPosition());
 
-        waitForStart();
+            telemetry.addData("mid current Position", midjoint.getCurrentPosition());
+
+            telemetry.update();
+        }
+        // waitForStart();
 
         if (isStopRequested()) return;
 
@@ -108,27 +117,97 @@ public class TitanDrive extends LinearOpMode {
 
 
              */
-            double basepow = 0.4;
 
-            if (gamepad2.right_trigger>0){
-                basearm.setPower(basepow + 0.25);
-            }
-           else if (gamepad2.right_bumper){
-                basearm.setPower(-basepow);
-            }
-            else {
-                basearm.setPower(0);
-            }
+            double armpower = 0.05;
+            int basetarg = 0;
+            int midtarg = 0;
 
-            if(gamepad2.left_trigger>0){
-                midjoint.setPower(0.4 );
+
+
+        if  (gamepad2.right_stick_y > 0) {
+            basetarg = basetarg - 10;
+            basearm.setTargetPosition(basetarg);
+            basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            basearm.setPower(armpower);
+        }
+        if (gamepad2.right_stick_y <0) {
+            basetarg = basetarg + 10;
+            basearm.setTargetPosition(basetarg);
+            basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            basearm.setPower(armpower);
+        }
+
+        if(gamepad2.right_stick_y == 0) {
+            basearm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            basearm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            basearm.setPower(0);
+
+        }
+
+
+
+
+
+
+
+            if (gamepad2.left_stick_y > 0) {
+                midtarg = midtarg - 10;
+                midjoint.setTargetPosition(midtarg);
+                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                midjoint.setPower(armpower);
             }
-            else    if (gamepad2.left_bumper){
-                midjoint.setPower(-0.4);
+            if (gamepad2.left_stick_y <0) {
+                midtarg = midtarg + 10;
+                midjoint.setTargetPosition(midtarg);
+                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                midjoint.setPower(armpower);
             }
-            else {
+            if(gamepad2.left_stick_y == 0) {
+                midjoint.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                midjoint.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 midjoint.setPower(0);
             }
+
+
+
+//            if (gamepad2.right_trigger > 0) {
+//                basearm.setTargetPosition(-390);
+//                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                basearm.setPower(armpower);
+//            } else if (gamepad2.right_bumper) {
+//                basearm.setTargetPosition(-130);
+//                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                basearm.setPower(armpower);
+//            } else {
+//                basearm.setTargetPosition(0);
+//                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                basearm.setPower(armpower);
+//            }
+//
+//            if (gamepad2.left_trigger > 0) {
+//                midjoint.setTargetPosition(-350);
+//                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                midjoint.setPower(armpower);
+//            } else if (gamepad2.left_bumper) {
+//                midjoint.setTargetPosition(-184);
+//                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                midjoint.setPower(armpower);
+//            } else {
+//                midjoint.setTargetPosition(0);
+//                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                midjoint.setPower(armpower);
+//            }
+
+   /*Targets for arm
+
+    top -  -390
+    bottom - 0
+
+    top - -700
+    bottom - 0
+
+
+     */
 //            if (gamepad2.left_stick_y!=0) {
 //                basearm.setPower(gamepad2.left_stick_y);
 //            }
@@ -149,13 +228,18 @@ public class TitanDrive extends LinearOpMode {
                 pinch.setPosition(1);
             }
 
-            if (gamepad2.dpad_up) {
-                angle.setPosition(0);
+            if (gamepad2.dpad_up ) {
+                angle.setPosition(0.3);
             }
-            if(gamepad2.dpad_down) {
-                angle.setPosition(1);
-            }
+            if (gamepad2.dpad_down) {
+                angle.setPosition(0.7);
 
+            }
+            telemetry.addData("midtarg", midtarg);
+            telemetry.addData("basetarg", basetarg);
+            telemetry.update();
         }
     }
 }
+
+        

@@ -7,17 +7,20 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class OlmpyActions {
     private DcMotor motor;
     private DcMotor lift;
+    Servo bucket;
     OpMode op;
 
     static final double TICKS_PER_INCH = 125;
 
     public OlmpyActions(HardwareMap hardwareMap) {
-        motor = hardwareMap.get(DcMotor.class, "pulley");
-        lift = hardwareMap.get(DcMotor.class, "pulley");
+        lift = hardwareMap.get(DcMotor.class, "lift");
+         bucket = hardwareMap.servo.get("bucket");
+
     }
 
     public Action spinUp () {
@@ -63,9 +66,50 @@ public class OlmpyActions {
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!initialized) {
                     lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lift.setTargetPosition((int) (TICKS_PER_INCH * 28));
+                    lift.setTargetPosition((int) (TICKS_PER_INCH * 31));
                     lift.setPower(1);
                     initialized = true;
+                    startTime = telemetryPacket.addTimestamp();
+                }
+
+                if (telemetryPacket.addTimestamp() - startTime > 1000) {
+                    return false;
+                }
+
+                return lift.isBusy();
+            }
+        };
+    }
+    public Action drop() {
+        return new Action() {
+            private boolean initialized = false;
+            private long startTime;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (!initialized) {
+                    bucket.setPosition(0.8);
+                    initialized = true;
+                    startTime = telemetryPacket.addTimestamp();
+                }
+
+                if (telemetryPacket.addTimestamp() - startTime > 1000) {
+                    return false;
+                }
+
+                return lift.isBusy();
+            }
+        };
+    }
+    public Action up() {
+        return new Action() {
+            private boolean initialized = false;
+            private long startTime;
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (!initialized) {
+                    bucket.setPosition(1);                    initialized = true;
                     startTime = telemetryPacket.addTimestamp();
                 }
 
