@@ -43,13 +43,17 @@ public class TitanDrive extends LinearOpMode {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
 
+        telemetry.addData("base current Position", basearm.getCurrentPosition());
+
+        telemetry.addData("mid current Position", midjoint.getCurrentPosition());
+
         waitForStart();
 
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = -gamepad1.left_stick_x;
+            double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
 
             // This button choice was made so that it is hard to hit on accident,
@@ -109,7 +113,7 @@ public class TitanDrive extends LinearOpMode {
             if (gamepad2.right_trigger>0){
                 basearm.setPower(basepow + 0.25);
             }
-            if (gamepad2.right_bumper){
+           else if (gamepad2.right_bumper){
                 basearm.setPower(-basepow);
             }
             else {
@@ -117,10 +121,10 @@ public class TitanDrive extends LinearOpMode {
             }
 
             if(gamepad2.left_trigger>0){
-                midjoint.setPower(0.2);
+                midjoint.setPower(0.4 );
             }
-            if (gamepad2.left_bumper){
-                midjoint.setPower(-0.2);
+            else    if (gamepad2.left_bumper){
+                midjoint.setPower(-0.4);
             }
             else {
                 midjoint.setPower(0);

@@ -21,12 +21,11 @@
             private void runToPosition(DcMotor motor, double target) {
                 if (Math.abs(target - motor.getCurrentPosition()) < 20) {
                     motor.setPower(0.001);
-                }
-                else {
+                } else {
                     motor.setPower(0.3);
                 }
 
-                motor.setTargetPosition((int)target);
+                motor.setTargetPosition((int) target);
                 motor.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Can't hurt to call this repeatedly
             }
 
@@ -65,31 +64,13 @@
                 imu.initialize(parameters);
 
 
-                while (opModeInInit()) {
-                    double position = tilt.getCurrentPosition();
-
-//                    runToPosition(tilt, INIT_POSITION);
-//                    bucket.setPosition(.7);
-//                    intake_angle.setPosition(.6);
-
-
-
-                    telemetry.addData("Tilt Encoder Position", position);
-                    // Show the target position of the armMotor on telemetry
-                    telemetry.addData("Desired Tilt Position", tilt.getTargetPosition());
-                    telemetry.addData("Tilt Power", tilt.getPower());
-
-                    telemetry.update();
-                }
-
-
-//                waitForStart();
+                waitForStart();
 
                 if (isStopRequested()) return;
 
                 while (opModeIsActive()) {
                     double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-                    double x = -gamepad1.left_stick_x;
+                    double x = gamepad1.left_stick_x;
                     double rx = -gamepad1.right_stick_x;
 
                     // This button choice was made so that it is hard to hit on accident,
@@ -129,22 +110,20 @@
                         frontLeftMotor.setPower(frontLeftPower / 2);
                     }
 
-                    if (gamepad2.b) {
-                        bucket.setPosition(0.8 );
-                    }
-                    if (gamepad2.y) {
-                        bucket.setPosition(1);
-                    }
+
                     if (gamepad2.dpad_down) {
-                        lift.setTargetPosition((int)TICKS_PER_INCH * 4);
+                        lift.setTargetPosition((int) TICKS_PER_INCH * 4);
                         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         lift.setPower(0.3);
                     }
                     if (gamepad2.dpad_up) {
-                        lift.setTargetPosition((int)TICKS_PER_INCH * 31);
+                        lift.setTargetPosition((int) TICKS_PER_INCH * 31);
                         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         lift.setPower(0.3);
+                    }
+
                     if (gamepad2.x) {
+
                         intake.setDirection(DcMotorSimple.Direction.FORWARD);
                         intake.setPower(1.0);
                     } else if (gamepad2.a) {
@@ -154,29 +133,39 @@
                         intake.setPower(0);
                     }
 
-                    }
-                    if (gamepad2.left_trigger>0) {
+
+                    if (gamepad2.left_trigger > 0) {
                         tilt.setPower(0.8);
-                    }
-                    else if (gamepad2.right_trigger>0) {
+                    } else if (gamepad2.right_trigger > 0) {
                         tilt.setPower(-0.8);
-                    }
-                    else {
+                    } else {
                         tilt.setPower(0);
                     }
-
+                    if (gamepad2.b) {
+                        bucket.setPosition(0.8);
+                    }
+                    if (gamepad2.y) {
+                        bucket.setPosition(1);
+                    }
                     if (gamepad2.dpad_left) {
                         intake_angle.setPosition(0);
-                    }
-                    else if (gamepad2.dpad_right) {
+                    } else if (gamepad2.dpad_right) {
                         intake_angle.setPosition(0.25);
                     }
 
 
-
-
                     // Show the position of the armMotor on telemetry
-                    telemetry.addData("Encoder Position", tilt.getCurrentPosition());
+                    telemetry.addLine("variables");
+                    telemetry.addData("rotx", rotX);
+                    telemetry.addData("roty", rotY);
+
+                    telemetry.addData("botheading", botHeading);
+
+                    telemetry.addLine("sticks");
+                    telemetry.addData("x", x);
+                    telemetry.addData("y", y);
+                    telemetry.addData("rx", rx);
+
 
                     // Show the target position of the armMotor on telemetry
                     telemetry.addData("Desired Position", tilt.getTargetPosition());
@@ -185,3 +174,7 @@
                 }
             }
         }
+
+
+
+
