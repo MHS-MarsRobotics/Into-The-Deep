@@ -121,54 +121,55 @@ public class TitanDrive extends LinearOpMode {
              */
 
             double armpower = 0.05;
-            int basetarg = 0;
-            int midtarg = 0;
+            int basetarg = -390;
+            int midtarg = -700;
 
 
 
-        if  (gamepad2.right_stick_y > 0) {
-            basetarg = basetarg - 10;
-            basearm.setTargetPosition(basetarg);
+        if  (gamepad2.right_stick_y != 0) {
+            basearm.setTargetPosition((int) (basetarg*(Math.abs(gamepad2.right_stick_y))));
             basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            basearm.setVelocity(1);
+            if((basearm.getTargetPosition()-basearm.getCurrentPosition()) <100) {
+                basearm.setVelocity(90);
+            }
+            else {
+                basearm.setVelocity(40);
+            }
         }
-        if (gamepad2.right_stick_y <0) {
-            basetarg = basetarg + 10;
-            basearm.setTargetPosition(basetarg);
+        else if (gamepad2.right_stick_y == 0) {
+            basearm.setTargetPosition(-10);
             basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            basearm.setVelocity(1);
-
+            basearm.setVelocity(40);
+            if((basearm.getTargetPosition()-basearm.getCurrentPosition()) <100) {
+                basearm.setVelocity(90);
+            }
+            else {
+                basearm.setVelocity(40);
+            }
         }
-
-        if(gamepad2.right_stick_y == 0) {
-            basearm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            basearm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            basearm.setPower(0);
-        }
-
-
-
-
-
-
 
             if (gamepad2.left_stick_y > 0) {
-                midtarg = midtarg - 10;
-                midjoint.setTargetPosition(midtarg);
+                midjoint.setTargetPosition((int) (midtarg/(Math.abs(gamepad2.left_stick_y))));
                 midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                midjoint.setVelocity(1);
+                midjoint.setVelocity(90);
+                if((midjoint.getTargetPosition()-midjoint.getCurrentPosition()) <100) {
+                    midjoint.setVelocity(90);
+                }
+                else {
+                    midjoint.setVelocity(40);
+                }
             }
-            if (gamepad2.left_stick_y <0) {
-                midtarg = midtarg + 10;
-                midjoint.setTargetPosition(midtarg);
-                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                midjoint.setVelocity(1);
 
-            }
-            if(gamepad2.left_stick_y == 0) {
-                midjoint.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                midjoint.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                midjoint.setPower(0);
+            else if (gamepad2.left_stick_y == 0) {
+                midjoint.setTargetPosition(-10);
+                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                midjoint.setVelocity(40);
+                if((midjoint.getTargetPosition()-midjoint.getCurrentPosition()) <100) {
+                    midjoint.setVelocity(90);
+                }
+                else {
+                    midjoint.setVelocity(40);
+                }
             }
 
 
@@ -224,22 +225,22 @@ public class TitanDrive extends LinearOpMode {
 //                midjoint.setPower(0);
 //            }
 
-            if (gamepad2.x) {
-                pinch.setPosition(0);
+            if (gamepad2.right_bumper ) {
+                pinch.setPosition(0.4);
             }
-            if (gamepad2.a) {
+            else if (gamepad2.right_trigger>0) {
                 pinch.setPosition(1);
             }
 
-            if (gamepad2.dpad_up ) {
-                angle.setPosition(0.3);
+            if (gamepad2.left_trigger>0 ) {
+                angle.setPosition(0.5);
             }
-            if (gamepad2.dpad_down) {
-                angle.setPosition(0.7);
+            else if (gamepad2.left_bumper) {
+                angle.setPosition(0.6);
 
             }
-            telemetry.addData("midtarg", midtarg);
-            telemetry.addData("basetarg", basetarg);
+            telemetry.addData("pinch", pinch.getPosition());
+            telemetry.addData("angle", angle.getPosition() );
             telemetry.update();
         }
     }

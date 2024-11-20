@@ -136,10 +136,10 @@ public class OlympMainDrive extends LinearOpMode {
 
 
             if (gamepad2.left_trigger > 0) {
-                tilt.setPower(gamepad2.left_trigger/5);
+                tilt.setPower(gamepad2.left_trigger/4);
             }
             else if (gamepad2.right_trigger > 0) {
-                tilt.setPower(-gamepad2.right_trigger/5);
+                tilt.setPower(-gamepad2.right_trigger/4);
             }
             else {
                 tilt.setPower(0);
@@ -149,12 +149,13 @@ public class OlympMainDrive extends LinearOpMode {
                 bucket.setPosition(0);
             }
             if (gamepad2.y) {
-                bucket.setPosition(0.3);
+                bucket.setPosition(0.333 );
             }
+
             if (gamepad2.dpad_left) {
                 intake_angle.setPosition(0);
             } else if (gamepad2.dpad_right) {
-                intake_angle.setPosition(0.25);
+                intake_angle.setPosition(0.3);
             }
 
             telemetry.addLine("lift");
