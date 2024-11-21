@@ -7,54 +7,38 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class TitanActions {
     private DcMotor motor;
     private DcMotor lift;
+    Servo pinch;
     OpMode op;
 
     static final double TICKS_PER_INCH = 125;
 
     public TitanActions(HardwareMap hardwareMap) {
-        motor = hardwareMap.get(DcMotor.class, "pulley");
-        lift = hardwareMap.get(DcMotor.class, "pulley");
+        lift = hardwareMap.get(DcMotor.class, "lift");
+         pinch = hardwareMap.servo.get("pinch");
+
     }
 
-    public Action spinUp () {
+    public Action unPinch() {
         return new Action() {
             private boolean initialized = false;
 
-            @Override
-            public boolean run(@NonNull TelemetryPacket packet) {
-                if (!initialized) {
-                    motor.setTargetPosition(25);
-                    motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    motor.setPower(0.8);
-                    initialized = true;
-                }
-                return motor.isBusy();
-            }
-        };
-    }
-
-    public Action liftDown() {
-        return new Action() {
-            private boolean initialized = false;
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!initialized) {
-                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lift.setTargetPosition(0);
-                    lift.setPower(1);
+                    pinch.setPosition(0.4);
                     initialized = true;
                 }
 
-                return lift.isBusy();
+                return Double.compare(pinch.getPosition(), 0.4) == 0;
             }
         };
     }
-
-    public Action liftUp() {
+    public Action pinch() {
         return new Action() {
             private boolean initialized = false;
             private long startTime;
@@ -62,18 +46,11 @@ public class TitanActions {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!initialized) {
-                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lift.setTargetPosition((int) (TICKS_PER_INCH * 28));
-                    lift.setPower(1);
+                    pinch.setPosition(1);
                     initialized = true;
-                    startTime = telemetryPacket.addTimestamp();
                 }
 
-                if (telemetryPacket.addTimestamp() - startTime > 1000) {
-                    return false;
-                }
-
-                return lift.isBusy();
+                return Double.compare(pinch.getPosition(), 1) == 0;
             }
         };
     }

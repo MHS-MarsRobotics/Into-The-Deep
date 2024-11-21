@@ -97,7 +97,7 @@ public class OlmpyActions {
                     return false;
                 }
 
-                return lift.isBusy();
+                return true;
             }
         };
     }
@@ -109,7 +109,8 @@ public class OlmpyActions {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!initialized) {
-                    bucket.setPosition(1);                    initialized = true;
+                    bucket.setPosition(1);
+                    initialized = true;
                     startTime = telemetryPacket.addTimestamp();
                 }
 
@@ -117,7 +118,7 @@ public class OlmpyActions {
                     return false;
                 }
 
-                return lift.isBusy();
+                return true;
             }
         };
     }

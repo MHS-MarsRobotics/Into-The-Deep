@@ -52,6 +52,7 @@ public class OlympMainDrive extends LinearOpMode {
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         tilt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         tilt.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -39,7 +40,6 @@ public class TitanDrive extends LinearOpMode {
 
         basearm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         midjoint.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
 
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
@@ -120,43 +120,42 @@ public class TitanDrive extends LinearOpMode {
 
              */
 
-            double armpower = 0.05;
+
             int basetarg = -390;
             int midtarg = -700;
 
 
 
-        if  (gamepad2.right_stick_y != 0) {
-            basearm.setTargetPosition((int) (basetarg*(Math.abs(gamepad2.right_stick_y))));
-            basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            if((basearm.getTargetPosition()-basearm.getCurrentPosition()) <100) {
-                basearm.setVelocity(90);
-            }
-            else {
-                basearm.setVelocity(40);
-            }
-        }
-        else if (gamepad2.right_stick_y == 0) {
-            basearm.setTargetPosition(-10);
-            basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            basearm.setVelocity(40);
-            if((basearm.getTargetPosition()-basearm.getCurrentPosition()) <100) {
-                basearm.setVelocity(90);
-            }
-            else {
-                basearm.setVelocity(40);
-            }
-        }
-
-            if (gamepad2.left_stick_y > 0) {
-                midjoint.setTargetPosition((int) (midtarg/(Math.abs(gamepad2.left_stick_y))));
-                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                midjoint.setVelocity(90);
-                if((midjoint.getTargetPosition()-midjoint.getCurrentPosition()) <100) {
-                    midjoint.setVelocity(90);
+            if  (gamepad2.right_stick_y != 0) {
+                basearm.setTargetPosition((int) (basetarg*(Math.abs(gamepad2.right_stick_y))));
+                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                if((basearm.getTargetPosition()-basearm.getCurrentPosition()) > -100) {
+                    basearm.setVelocity(40);
                 }
                 else {
-                    midjoint.setVelocity(40);
+                    basearm.setVelocity(90);
+                }
+            }
+            else if (gamepad2.right_stick_y == 0) {
+                basearm.setTargetPosition(-10);
+                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                basearm.setVelocity(40);
+                if((basearm.getTargetPosition()-basearm.getCurrentPosition()) > -100) {
+                    basearm.setVelocity(40);
+                }
+                else {
+                    basearm.setVelocity(90);
+                }
+            }
+
+            if (gamepad2.left_stick_y > 0) {
+                midjoint.setTargetPosition((int) (midtarg*(Math.abs(gamepad2.left_stick_y))));
+                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                if((midjoint.getTargetPosition()-midjoint.getCurrentPosition()) > -100) {
+                    midjoint.setVelocity(30);
+                }
+                else {
+                    midjoint.setVelocity(70);
                 }
             }
 
@@ -164,11 +163,11 @@ public class TitanDrive extends LinearOpMode {
                 midjoint.setTargetPosition(-10);
                 midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 midjoint.setVelocity(40);
-                if((midjoint.getTargetPosition()-midjoint.getCurrentPosition()) <100) {
-                    midjoint.setVelocity(90);
+                if((midjoint.getTargetPosition()-midjoint.getCurrentPosition()) > -100) {
+                    midjoint.setVelocity(30);
                 }
                 else {
-                    midjoint.setVelocity(40);
+                    midjoint.setVelocity(70);
                 }
             }
 
@@ -225,7 +224,7 @@ public class TitanDrive extends LinearOpMode {
 //                midjoint.setPower(0);
 //            }
 
-            if (gamepad2.right_bumper ) {
+            if (gamepad2.right_bumper) {
                 pinch.setPosition(0.4);
             }
             else if (gamepad2.right_trigger>0) {
