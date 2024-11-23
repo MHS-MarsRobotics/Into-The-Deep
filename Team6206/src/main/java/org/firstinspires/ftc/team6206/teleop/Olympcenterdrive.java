@@ -1,18 +1,20 @@
-package org.firstinspires.ftc.team6206;
+   package org.firstinspires.ftc.team6206.teleop;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp (name = "centerdrive")
-public class centerdrive extends LinearOpMode {
+@Disabled
+@TeleOp (name = "Olymp centerdrive")
+public class Olympcenterdrive extends LinearOpMode {
 
-    private DcMotor winch = null;
-    private DcMotor pulley = null;
-
+    private DcMotor slide1 = null;
+    private DcMotor slide2 = null;
+    private Servo grab = null;
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -22,8 +24,9 @@ public class centerdrive extends LinearOpMode {
         DcMotor motorBackLeft = hardwareMap.dcMotor.get("left motor 2");
         DcMotor motorFrontRight = hardwareMap.dcMotor.get("right motor 1");
         DcMotor motorBackRight = hardwareMap.dcMotor.get("right motor 2");
-        winch = hardwareMap.dcMotor.get("wench");
-        pulley = hardwareMap.dcMotor.get("pulley");
+        grab = hardwareMap.servo.get("grab");
+        slide1 = hardwareMap.dcMotor.get("slide1");
+        slide2 = hardwareMap.dcMotor.get("slide2");
 
         // Reverse the right side motors
         // Reverse left motors if you are using NeveRests
@@ -74,18 +77,26 @@ public class centerdrive extends LinearOpMode {
                 motorFrontLeft.setPower(frontLeftPower/2);
             }
 
-                if (gamepad2. left_trigger>0){
-                    pulley.setPower(-100);
-                    winch.setPower(100);
-                }
-                else if (gamepad2.right_trigger>0){
-                    winch.setPower(-100);
-                    pulley.setPower(100);
-                }
-                else {
-                    winch.setPower(0);
-                    pulley.setPower(0);
-                }
+            if (gamepad2. left_trigger>0){
+                slide2.setPower(-100);
+                slide1.setPower(100);
+            }
+            else if (gamepad2.right_trigger>0){
+                slide1.setPower(-100);
+                slide2.setPower(100);
+            }
+            else {
+                slide1.setPower(0);
+                slide2.setPower(0);
+            }
+
+            if (gamepad2.a){
+                grab.setPosition(.72);
+            }
+            if (gamepad2.x){
+                grab.setPosition(.96);
+            }
+
 
 
 

@@ -1,14 +1,16 @@
 
-package org.firstinspires.ftc.team6206;
+package org.firstinspires.ftc.team6206.teleop;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -17,6 +19,7 @@ public class OlympMainDrive extends LinearOpMode {
 
     static final double TICKS_PER_INCH = 125;
     static final int INIT_POSITION = 80;
+    private boolean manualOverride = false;
 
     private void runToPosition(DcMotor motor, double target) {
         if (Math.abs(target - motor.getCurrentPosition()) < 20) {
@@ -37,7 +40,7 @@ public class OlympMainDrive extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("left motor 2");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("right motor 1");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("right motor 2");
-        DcMotor lift = hardwareMap.dcMotor.get("lift");
+        DcMotorEx lift = (DcMotorEx) hardwareMap.dcMotor.get("lift");
         DcMotor tilt = hardwareMap.dcMotor.get("tilt");
         Servo bucket = hardwareMap.servo.get("bucket");
         CRServo intake = hardwareMap.crservo.get("intake");
@@ -69,6 +72,8 @@ public class OlympMainDrive extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
+
+        ElapsedTime timer = new ElapsedTime();
 
         while (opModeIsActive()) {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
@@ -114,14 +119,34 @@ public class OlympMainDrive extends LinearOpMode {
 
 
             if (gamepad2.dpad_down) {
-                lift.setTargetPosition((int) TICKS_PER_INCH * 4);
-                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lift.setPower(0.3);
+                if (manualOverride){
+                    lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    lift.setVelocity(40);
+                }
+                else {
+                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lift.setTargetPosition((int) TICKS_PER_INCH * 5);
+                    lift.setPower(0.6);
+                }
             }
             if (gamepad2.dpad_up) {
-                lift.setTargetPosition((int) TICKS_PER_INCH * 31);
-                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lift.setPower(0.3);
+                if (manualOverride){
+                    lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    lift.setVelocity(-40);
+                }
+                else {
+                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lift.setTargetPosition((int) TICKS_PER_INCH * 31);
+                    lift.setPower(0.6);
+                }
+            }
+
+            // Manual Override Lift
+            if (gamepad2.right_bumper) {
+                if (timer.seconds() >= 1) {
+                    manualOverride = !manualOverride;
+                    timer.reset();
+                }
             }
 
             if (gamepad2.x) {
@@ -156,8 +181,10 @@ public class OlympMainDrive extends LinearOpMode {
             if (gamepad2.dpad_left) {
                 intake_angle.setPosition(0);
             } else if (gamepad2.dpad_right) {
-                intake_angle.setPosition(0.3);
+                intake_angle.setPosition(0.15);
             }
+
+
 
             telemetry.addLine("lift");
             telemetry.addData("current" ,lift.getCurrentPosition());

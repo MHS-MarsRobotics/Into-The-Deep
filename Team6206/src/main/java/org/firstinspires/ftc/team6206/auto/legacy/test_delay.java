@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.team6206;
+package org.firstinspires.ftc.team6206.auto.legacy;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
@@ -8,6 +8,8 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.team6206.MecanumDrive;
 
 @Config
 @Autonomous(name = "Delayed Auto", group = "Autonomous")

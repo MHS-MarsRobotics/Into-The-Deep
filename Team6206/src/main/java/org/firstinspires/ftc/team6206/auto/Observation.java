@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.team5187;
+package org.firstinspires.ftc.team6206.auto;
 
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.config.Config;
@@ -9,6 +9,8 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.team6206.MecanumDrive;
 
 @Config
 @Autonomous(name = "Red Auto", group = "Autonomous")

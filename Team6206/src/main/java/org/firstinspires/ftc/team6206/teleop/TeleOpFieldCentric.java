@@ -1,5 +1,5 @@
 
-        package org.firstinspires.ftc.team6206;
+        package org.firstinspires.ftc.team6206.teleop;
 
         import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
         import com.qualcomm.robotcore.hardware.IMU;
