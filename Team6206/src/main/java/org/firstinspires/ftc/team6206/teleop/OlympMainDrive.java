@@ -125,7 +125,7 @@ public class OlympMainDrive extends LinearOpMode {
                 }
                 else {
                     lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lift.setTargetPosition((int) TICKS_PER_INCH * 5);
+                    lift.setTargetPosition((int) (TICKS_PER_INCH * 3.5));
                     lift.setPower(0.6);
                 }
             }
