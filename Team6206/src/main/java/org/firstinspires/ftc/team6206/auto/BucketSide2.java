@@ -17,7 +17,7 @@ public class BucketSide2 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d action1Starting = new Pose2d(32, -62, Math.toRadians(0));
-        Pose2d action2Starting = new Pose2d(-30, -64, Math.toRadians(0));
+        Pose2d action2Starting = new Pose2d(-30, -64, Math.toRadians(180));
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, action2Starting);
         OlmpyActions oActions = new OlmpyActions(hardwareMap);
 
@@ -91,20 +91,20 @@ public class BucketSide2 extends LinearOpMode {
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(
-                        trajectoryAction1,
-                        armChamberDropActions,
-                        trajectoryAction2,
-                        armUpActions,
-                        trajectoryAction3,
-                        armBasketDropActions,
-                        trajectoryAction4,
-                        armUpActions,
-                        trajectoryAction5,
-                        armBasketDropActions,
-                        trajectoryAction6,
-                        armUpActions,
-                        trajectoryAction7,
-                        armBasketDropActions
+                        trajectoryAction1
+//                        armChamberDropActions,
+//                        trajectoryAction2,
+//                        armUpActions,
+//                        trajectoryAction3,
+//                        armBasketDropActions,
+//                        trajectoryAction4,
+//                        armUpActions,
+//                        trajectoryAction5,
+//                        armBasketDropActions,
+//                        trajectoryAction6,
+//                        armUpActions,
+//                        trajectoryAction7,
+//                        armBasketDropActions
                 )
         );
     }

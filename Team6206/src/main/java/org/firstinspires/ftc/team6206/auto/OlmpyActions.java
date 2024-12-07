@@ -7,13 +7,18 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class OlmpyActions {
     private DcMotor motor;
-    private DcMotor lift;
+    private DcMotorEx lift;
+    private DcMotor leftFront;
+    private DcMotor leftBack;
+    private DcMotor rightBack;
+    private DcMotor rightFront;
     Servo bucket;
     CRServo intake;
     OpMode op;
@@ -21,12 +26,17 @@ public class OlmpyActions {
     static final double TICKS_PER_INCH = 125;
 
     public OlmpyActions(HardwareMap hardwareMap) {
-        lift = hardwareMap.get(DcMotor.class, "lift");
-         bucket = hardwareMap.servo.get("bucket");
-         intake = (CRServo) hardwareMap.servo.get("intake");
+        lift = hardwareMap.get(DcMotorEx.class, "lift");
+        bucket = hardwareMap.servo.get("bucket");
+        intake =  hardwareMap.crservo.get("intake");
+
+        leftFront = hardwareMap.get(DcMotorEx.class, "left motor 1");
+        leftBack = hardwareMap.get(DcMotorEx.class, "left motor 2");
+        rightBack = hardwareMap.get(DcMotorEx.class, "right motor 2");
+        rightFront = hardwareMap.get(DcMotorEx.class, "right motor 1");
     }
 
-    public Action spinUp () {
+    public Action spinUp() {
         return new Action() {
             private boolean initialized = false;
 
@@ -46,12 +56,15 @@ public class OlmpyActions {
     public Action liftDown() {
         return new Action() {
             private boolean initialized = false;
+
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!initialized) {
-                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     lift.setTargetPosition(0);
+                    lift.setTargetPositionTolerance(60);
+
                     lift.setPower(1);
+                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     initialized = true;
                 }
 
@@ -68,9 +81,9 @@ public class OlmpyActions {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!initialized) {
-                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     lift.setTargetPosition((int) (TICKS_PER_INCH * height));
                     lift.setPower(1);
+                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     initialized = true;
                     startTime = telemetryPacket.addTimestamp();
                 }
@@ -105,6 +118,7 @@ public class OlmpyActions {
             }
         };
     }
+
     public Action up() {
         return new Action() {
             private boolean initialized = false;
@@ -172,8 +186,10 @@ public class OlmpyActions {
             }
         };
     }
+    public Action stop_intake() {
 
-    public Action out_intake() {
+
+
         return new Action() {
             private boolean initialized = false;
             private long startTime;
@@ -181,8 +197,7 @@ public class OlmpyActions {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!initialized) {
-                    intake.setPower(1);
-                    intake.setDirection(DcMotorSimple.Direction.REVERSE);
+                    intake.setPower(0);
                     initialized = true;
                     startTime = telemetryPacket.addTimestamp();
                 }
@@ -196,6 +211,17 @@ public class OlmpyActions {
         };
     }
 
+    public Action tele() {
+        return new Action() {
+            private boolean initialized = false;
+            private long startTime;
 
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 
+                return rightFront.isBusy() || rightBack.isBusy() || leftFront.isBusy() || leftBack.isBusy();
+            }
+        };
+    }
 }
+
