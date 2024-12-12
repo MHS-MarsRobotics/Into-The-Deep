@@ -5,11 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name = "Olymp Testing")
+@TeleOp(name = "Testing")
 public class TestOlymp extends LinearOpMode {
 
     static final double TICKS_PER_INCH = 125;
@@ -17,43 +18,29 @@ public class TestOlymp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        DcMotor motorFrontLeft = null;
-        DcMotor motorBackLeft = null;
-        DcMotor motorFrontRight = null;
-        DcMotor motorBackRight = null;
-        DcMotor lift = null;
-        DcMotor tilt = null;
-        Servo bucket = null;
-        CRServo intake = null;
-        Servo intake_angle = null;
+        DcMotor frontLeftMotor = hardwareMap.dcMotor.get("left motor 1");
+        DcMotor backLeftMotor = hardwareMap.dcMotor.get("left motor 2");
+        DcMotor frontRightMotor = hardwareMap.dcMotor.get("right motor 1");
+        DcMotor backRightMotor = hardwareMap.dcMotor.get("right motor 2");
+        DcMotorEx basearm = (DcMotorEx) hardwareMap.dcMotor.get("base");
+        DcMotorEx midjoint = (DcMotorEx) hardwareMap.dcMotor.get("mid");
+        Servo pinch = hardwareMap.servo.get("pinch");
+        Servo angle = hardwareMap.servo.get("angle");
 
-        int liftarm_down =0;
-        int liftarm_up = 500;
+        basearm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        midjoint.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
         //125 ticks = 1 inch
 
 //        intake = hardwareMap.crservo.get("intake");
-        lift = hardwareMap.dcMotor.get("lift");
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        double liftSpeed = 1.0;
+
 
         // Declare our motors
         // Make sure your ID's match your configuration
         //
 
-           /* motorFrontLeft = hardwareMap.dcMotor.get("left motor 1");
-            motorBackLeft = hardwareMap.dcMotor.get("left motor 2");
-            motorFrontRight = hardwareMap.dcMotor.get("right motor 1");
-            motorBackRight = hardwareMap.dcMotor.get("right motor 2");
-            tilt = hardwareMap.dcMotor.get("tilt");
-            bucket = hardwareMap.servo.get("bucket");
-            intake_angle = hardwareMap.servo.get("angle");
-        } catch(IllegalArgumentException e) {
-            // Keep going, even if the hardware map doesn't exist
-            telemetry.addData("Missing hardware map: ", e.getMessage());
-            telemetry.update();
-        }
 
-            */
 
         // Reverse the right side motors
         // Reverse left motors if you are using NeveRests
@@ -127,51 +114,22 @@ public class TestOlymp extends LinearOpMode {
          //       motorFrontLeft.setPower(frontLeftPower / 2);
          //   }
 
-           /*
 
-            double position = lift.getCurrentPosition();
+
 
             // Get the target position of the armMotor
-            double desiredPosition = lift.getTargetPosition();
+            double baseposition = basearm.getCurrentPosition();
+            double midpos = midjoint.getCurrentPosition();
 
             // Show the position of the armMotor on telemetry
-            telemetry.addData("Encoder Position", position);
-
-            // Show the target position of the armMotor on telemetry
-            telemetry.addData("Desired Position", desiredPosition);
-
+            telemetry.addData("Encoder Position", baseposition);
+            telemetry.addData("midpos", midpos);
             telemetry.update();
 
-            */
 
-            if (gamepad2.right_bumper) {
-                lift.setTargetPosition((int) (TICKS_PER_INCH * 28));
-                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lift.setPower(liftSpeed);
-            }
-            else if (gamepad2.left_bumper) {
-                lift.setTargetPosition(0);
-                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lift.setPower(liftSpeed);
-            }
-
-//            if (gamepad2.x) {
-//                intake.setDirection(DcMotorSimple.Direction.FORWARD);
-//                intake.setPower(1.0);
-//            } else if (gamepad2.a) {
-//                intake.setDirection(DcMotorSimple.Direction.REVERSE);
-//                intake.setPower(1.0);
-//            } else {
-//                intake.setPower(0);
-//            }
         }
     }
 }
-/*            lift = hardwareMap.dcMotor.get("lift");
-            tilt = hardwareMap.dcMotor.get("tilt");
-            intake_angle = hardwareMap.servo.get("angle");
-
- */
 
 //gobilda cpr = 537.7
 // distance = (cpr * gear ratio) / (wheel diam * pi)

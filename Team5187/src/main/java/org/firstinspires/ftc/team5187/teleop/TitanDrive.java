@@ -39,6 +39,10 @@ public class TitanDrive extends LinearOpMode {
         basearm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         midjoint.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+
+        // Set motors to RUN_USING_ENCODER for velocity control
+        basearm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        midjoint.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
         // Adjust the orientation parameters to match your robot
@@ -56,7 +60,7 @@ public class TitanDrive extends LinearOpMode {
 
             telemetry.update();
         }
-        // waitForStart();
+        waitForStart();
 
         if (isStopRequested()) return;
 
@@ -119,56 +123,148 @@ public class TitanDrive extends LinearOpMode {
              */
 
 
-            int basetarg = -390;
-            int midtarg = -700;
+            int basetargtop = -1006;
+            int basetargbottom = 372;
+            int midtargtop = 2057;
+            int midtagbottom = 637;
+
+            // Initialize motors as DcMotorEx for velocity control
 
 
 
-            if  (gamepad2.right_stick_y != 0) {
-                basearm.setTargetPosition((int) (basetarg*(Math.abs(gamepad2.right_stick_y))));
-                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                if((basearm.getTargetPosition()-basearm.getCurrentPosition()) > -100) {
-                    basearm.setVelocity(40);
-                }
-                else {
-                    basearm.setVelocity(90);
-                }
-            }
-            else if (gamepad2.right_stick_y == 0) {
-                basearm.setTargetPosition(-10);
-                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                basearm.setVelocity(40);
-                if((basearm.getTargetPosition()-basearm.getCurrentPosition()) > -100) {
-                    basearm.setVelocity(40);
-                }
-                else {
-                    basearm.setVelocity(90);
-                }
-            }
 
-            if (gamepad2.left_stick_y > 0) {
-                midjoint.setTargetPosition((int) (midtarg*(Math.abs(gamepad2.left_stick_y))));
-                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                if((midjoint.getTargetPosition()-midjoint.getCurrentPosition()) > -100) {
-                    midjoint.setVelocity(30);
-                }
-                else {
-                    midjoint.setVelocity(70);
-                }
+            // Read joystick inputs
+            double arm1Joystick = -gamepad2.left_stick_y; // Joystick for arm 1
+            double arm2Joystick = -gamepad2.right_stick_y; // Joystick for arm 2
+
+            // Scale joystick inputs to velocity range
+            double maxVelocity1 = 20;
+            double maxVelocity2= 600; // Maximum velocity in ticks/sec
+            double arm1Velocity = arm1Joystick * maxVelocity1;
+            double arm2Velocity = arm2Joystick * maxVelocity2;
+
+            int arm1Position = basearm.getCurrentPosition();
+            if ((arm1Position <= basetargtop && arm1Joystick > 0) ||
+                    (arm1Position >= basetargbottom && arm1Joystick < 0)) {
+                arm1Velocity = 0; // Stop movement if limit is reached
             }
 
-            else if (gamepad2.left_stick_y == 0) {
-                midjoint.setTargetPosition(-10);
-                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                midjoint.setVelocity(40);
-                if((midjoint.getTargetPosition()-midjoint.getCurrentPosition()) > -100) {
-                    midjoint.setVelocity(30);
-                }
-                else {
-                    midjoint.setVelocity(70);
-                }
+            // Check and enforce limits for arm segment 2
+            int arm2Position = midjoint.getCurrentPosition();
+            if ((arm2Position >= midtargtop && arm2Joystick > 0) ||
+                    (arm2Position <= midtagbottom && arm2Joystick < 0)) {
+                arm2Velocity = 0; // Stop movement if limit is reached
             }
 
+            // Apply velocity to motors
+            basearm.setVelocity(arm1Velocity);
+            midjoint.setVelocity(arm2Velocity);
+
+            basearm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            midjoint.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+            // Telemetry for monitoring
+//            telemetry.addData("Arm1 Encoder", arm1Position);
+//            telemetry.addData("Arm2 Encoder", arm2Position);
+            telemetry.addData("Arm1 Velocity", arm1Velocity);
+            telemetry.addData("Arm2 Velocity", arm2Velocity);
+            telemetry.update();
+
+
+//            if (gamepad2.left_stick_y >0 && basearm.getCurrentPosition() > basetargtop){
+//                telemetry.addLine("Going up");
+//                basearm.setTargetPosition(basetargtop);
+//                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                basearm.setVelocity(25);
+//            }
+//            if (gamepad2.left_stick_y<0  && basearm.getCurrentPosition() < basetargbottom){
+//                telemetry.addLine("Going down");
+//
+//                basearm.setTargetPosition(basetargbottom);
+//                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                basearm.setVelocity(25);
+//            }
+//            else{
+//                telemetry.addLine("Going nowhere");
+//                basearm.setVelocity(0);
+//                basearm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//            }
+//
+//            if (gamepad2.right_stick_y >0 && midjoint.getCurrentPosition() < midtargtop){
+//                telemetry.addLine("Going up");
+//
+//                midjoint.setTargetPosition(midtargtop);
+//                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                midjoint.setVelocity(55);
+//            }
+//            if (gamepad2.right_stick_y<0  && midjoint.getCurrentPosition() < midtagbottom){
+//                telemetry.addLine("Going down");
+//
+//                midjoint.setTargetPosition(midtagbottom);
+//                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                midjoint.setVelocity(55);
+//            }
+//            else{
+//                telemetry.addLine("Going nowhere");
+//
+//                midjoint.setVelocity(0);
+//            }
+//
+//            double baseposition = basearm.getCurrentPosition();
+//            double midpos = midjoint.getCurrentPosition();
+//
+//            // Show the position of the armMotor on telemetry
+//            telemetry.addData("Encoder Position", baseposition);
+//            telemetry.addData("midpos", midpos);
+//            telemetry.update();
+
+
+//            if  (gamepad2.right_stick_y != 0) {
+//                basearm.setTargetPosition((int) (basetarg*(Math.abs(gamepad2.right_stick_y))));
+//                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                if((basearm.getTargetPosition()-basearm.getCurrentPosition()) > -100) {
+//                    basearm.setVelocity(40);
+//                }
+//                else {
+//                    basearm.setVelocity(90);
+//                }
+//            }
+//            else if (gamepad2.right_stick_y == 0) {
+//                basearm.setTargetPosition(-10);
+//                basearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                basearm.setVelocity(40);
+//                if((basearm.getTargetPosition()-basearm.getCurrentPosition()) > -100) {
+//                    basearm.setVelocity(40);
+//                }
+//                else {
+//                    basearm.setVelocity(0);
+//                    basearm.setPower(0);
+//                    basearm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//                }
+//            }
+
+//            if (gamepad2.left_stick_y > 0) {
+//                midjoint.setTargetPosition((int) (midtarg*(Math.abs(gamepad2.left_stick_y))));
+//                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                if((midjoint.getTargetPosition()-midjoint.getCurrentPosition()) > -100) {
+//                    midjoint.setVelocity(30);
+//                }
+//                else {
+//                    midjoint.setVelocity(70);
+//                }
+//            }
+//
+//            else if (gamepad2.left_stick_y == 0) {
+//                midjoint.setTargetPosition(-10);
+//                midjoint.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                midjoint.setVelocity(40);
+//                if((midjoint.getTargetPosition()-midjoint.getCurrentPosition()) > -100) {
+//                    midjoint.setVelocity(30);
+//                }
+//                else {
+//                    midjoint.setVelocity(70);
+//                }
+//            }
 
 
 //            if (gamepad2.right_trigger > 0) {
@@ -224,21 +320,17 @@ public class TitanDrive extends LinearOpMode {
 
             if (gamepad2.right_bumper) {
                 pinch.setPosition(0.4);
-            }
-            else if (gamepad2.right_trigger>0) {
+            } else if (gamepad2.right_trigger > 0) {
                 pinch.setPosition(1);
             }
 
-            if (gamepad2.left_trigger>0 ) {
+            if (gamepad2.left_trigger > 0) {
                 angle.setPosition(0.5);
-            }
-            else if (gamepad2.left_bumper) {
+            } else if (gamepad2.left_bumper) {
                 angle.setPosition(0.6);
 
             }
-            telemetry.addData("pinch", pinch.getPosition());
-            telemetry.addData("angle", angle.getPosition() );
-            telemetry.update();
+            // Show the position of the armMotor on telemetr
         }
     }
 }
