@@ -118,14 +118,14 @@ public class OlympMainDrive extends LinearOpMode {
             }
 
 
-            if (gamepad2.dpad_down) {
+          /*  if (gamepad2.dpad_down) {
                 if (manualOverride){
                     lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     lift.setVelocity(40);
                 }
                 else {
-                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     lift.setTargetPosition((int) (TICKS_PER_INCH * 3.5));
+                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     lift.setPower(0.6);
                 }
             }
@@ -135,10 +135,23 @@ public class OlympMainDrive extends LinearOpMode {
                     lift.setVelocity(-40);
                 }
                 else {
-                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     lift.setTargetPosition((int) TICKS_PER_INCH * 31);
+                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     lift.setPower(0.6);
                 }
+            }
+
+           */
+
+            if (gamepad2.dpad_up) {
+                lift.setTargetPosition((int) TICKS_PER_INCH * 31);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(1);
+            }
+            if (gamepad2.dpad_down) {
+                lift.setTargetPosition((int) (TICKS_PER_INCH * 3.5));
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(1);
             }
 
             // Manual Override Lift

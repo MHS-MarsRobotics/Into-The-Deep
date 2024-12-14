@@ -27,7 +27,7 @@ public class parking extends LinearOpMode {
         int height1 = 31;
 
         Action trajectoryAction1 = mecanumDrive.actionBuilder(mecanumDrive.pose)
-                .strafeTo(new Vector2d(-50,-64))
+                .strafeTo(new Vector2d(50,-64))
                 .build();
 
         waitForStart();
