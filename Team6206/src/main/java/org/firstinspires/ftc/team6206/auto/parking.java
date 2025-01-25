@@ -27,15 +27,45 @@ public class parking extends LinearOpMode {
         int height1 = 31;
 
         Action trajectoryAction1 = mecanumDrive.actionBuilder(mecanumDrive.pose)
-                .strafeTo(new Vector2d(50,-64))
+                //.strafeTo(new Vector2d(50,-64))
+                .splineTo(new Vector2d(-55 ,-52), Math.toRadians(-125))
+                .turn(Math.toRadians(180))
+
+                .build();
+
+        Action trajectoryAction2 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+                //.strafeTo(new Vector2d(50,-64))
+                .turn(Math.toRadians(-60))
+                .splineTo(new Vector2d(55 ,-62), Math.toRadians(0))
+
+                .build();
+
+        Action trajectoryAction3 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+                //.strafeTo(new Vector2d(50,-64))
+                .lineToX(-59)
+                .lineToY(-56)
+
+                .build();
+        Action trajectoryAction4 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+                //.strafeTo(new Vector2d(50,-64))
+                .lineToX(-55)
+                .lineToY(-52)
+
                 .build();
 
         waitForStart();
 
         if (isStopRequested()) return;
         Actions.runBlocking(
-                new ParallelAction(
-                        trajectoryAction1
+                new SequentialAction(
+                        trajectoryAction1,
+                        oActions.liftUp(height1),
+                        trajectoryAction3,
+                        oActions.drop(),
+                        trajectoryAction4,
+                        oActions.liftUp(0),
+                        trajectoryAction2,
+                        oActions.up()
                 )
         );
     }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.team5187;
+package org.firstinspires.ftc.teamProgamer;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.DualNum;
@@ -11,12 +11,11 @@ import com.acmerobotics.roadrunner.ftc.FlightRecorder;
 import com.acmerobotics.roadrunner.ftc.OverflowEncoder;
 import com.acmerobotics.roadrunner.ftc.PositionVelocityPair;
 import com.acmerobotics.roadrunner.ftc.RawEncoder;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.Encoder;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.team5187.messages.ThreeDeadWheelInputsMessage;
+import org.firstinspires.ftc.teamProgamer.messages.ThreeDeadWheelInputsMessage;
 
 @Config
 public final class ThreeDeadWheelLocalizer implements Localizer {

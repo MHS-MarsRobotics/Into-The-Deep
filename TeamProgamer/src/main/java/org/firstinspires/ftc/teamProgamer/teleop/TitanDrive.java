@@ -1,5 +1,5 @@
 
-package org.firstinspires.ftc.team5187.teleop;
+package org.firstinspires.ftc.teamProgamer.teleop;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -28,7 +28,6 @@ public class TitanDrive extends LinearOpMode {
         DcMotorEx midjoint = (DcMotorEx) hardwareMap.dcMotor.get("mid");
         Servo pinch = hardwareMap.servo.get("pinch");
         Servo angle = hardwareMap.servo.get("angle");
-        Servo linear = hardwareMap.servo.get("linear");
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -170,12 +169,6 @@ public class TitanDrive extends LinearOpMode {
                 }
             }
 
-            if (gamepad2.dpad_up) {
-                linear.setPosition(0.225);
-            }
-            if (gamepad2.dpad_down) {
-                linear.setPosition(0.975);
-            }
 
 
 //            if (gamepad2.right_trigger > 0) {
