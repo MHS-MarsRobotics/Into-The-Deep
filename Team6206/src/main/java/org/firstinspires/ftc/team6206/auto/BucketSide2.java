@@ -23,48 +23,42 @@ public class BucketSide2 extends LinearOpMode {
 
         int height1 = 31;
 
-        Action trajectoryAction1 = mecanumDrive.actionBuilder(mecanumDrive.pose)
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-6, -34))
-                .waitSeconds(1)
-                .build();
 
-        Action trajectoryAction2 = mecanumDrive.actionBuilder(mecanumDrive.pose)
-                .strafeTo(new Vector2d(-6, -50))
-                .waitSeconds(1)
-                .splineTo(new Vector2d(-37, -22), Math.toRadians(90))
+
+        Action trajectoryAction1 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+                .strafeTo(new Vector2d(-37, -22))
                 .waitSeconds(1)
                 .turn(Math.toRadians(90))
                 .strafeTo(new Vector2d(-37, -24))
                 .waitSeconds(3)
                 .build();
 
-        Action trajectoryAction3 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+        Action trajectoryAction2 = mecanumDrive.actionBuilder(mecanumDrive.pose)
                 .turn(Math.toRadians(45))
                 .strafeTo(new Vector2d(-52, -52))
                 .waitSeconds(3)
                 .build();
 
-        Action trajectoryAction4 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+        Action trajectoryAction3 = mecanumDrive.actionBuilder(mecanumDrive.pose)
                 .turn(Math.toRadians(-45))
                 .strafeTo(new Vector2d(-47, -52))
                 .strafeTo(new Vector2d(-47, -24))
                 .waitSeconds(3)
                 .build();
 
-        Action trajectoryAction5 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+        Action trajectoryAction4 = mecanumDrive.actionBuilder(mecanumDrive.pose)
                 .turn(Math.toRadians(45))
                 .strafeTo(new Vector2d(-52, -52))
                 .waitSeconds(3)
                 .build();
 
-        Action trajectoryAction6 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+        Action trajectoryAction5 = mecanumDrive.actionBuilder(mecanumDrive.pose)
                 .turn(Math.toRadians(-45))
                 .strafeTo(new Vector2d(-57, -24))
                 .waitSeconds(3)
                 .build();
 
-        Action trajectoryAction7 = mecanumDrive.actionBuilder(mecanumDrive.pose)
+        Action trajectoryAction6 = mecanumDrive.actionBuilder(mecanumDrive.pose)
                 .turn(Math.toRadians(45))
                 .strafeTo(new Vector2d(-52, -52))
                 .build();
@@ -88,23 +82,26 @@ public class BucketSide2 extends LinearOpMode {
                 oActions.up(),
                 oActions.liftUp(height1)
         );
+        SequentialAction armChamberUpActions = new SequentialAction(
+                oActions.liftDown(),
+                oActions.up(),
+                oActions.drop()
+                );
 
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(
                         trajectoryAction1
-//                        armChamberDropActions
+//                        armUpActions,
 //                        trajectoryAction2,
-//                        armUpActions,
+//                        armBasketDropActions,
 //                        trajectoryAction3,
-//                        armBasketDropActions,
+//                        armUpActions,
 //                        trajectoryAction4,
-//                        armUpActions,
-//                        trajectoryAction5,
 //                        armBasketDropActions,
-//                        trajectoryAction6,
+//                        trajectoryAction5,
 //                        armUpActions,
-//                        trajectoryAction7,
+//                        trajectoryAction6,
 //                        armBasketDropActions
                 )
         );

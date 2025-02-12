@@ -31,11 +31,6 @@ public class MeepMeepTesting2 {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(32, -62, Math.toRadians(90)))
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(6,-34))
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(6,-50))
-                .waitSeconds(1)
                 .splineTo(new Vector2d(37,-22),Math.toRadians(90))
                 .waitSeconds(1)
                 .turn(Math.toRadians(-90))
@@ -58,12 +53,8 @@ public class MeepMeepTesting2 {
                 .build());
 
         testOlympianBot.runAction(testOlympianBot.getDrive().actionBuilder(new Pose2d(-30, -64, Math.toRadians(90)))
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-6,-34))
-                .waitSeconds(1)
-                .strafeTo(new Vector2d(-6,-50))
-                .waitSeconds(1)
-                .splineTo(new Vector2d(-37,-22),Math.toRadians(90))
+
+                .strafeTo(new Vector2d(-37,-22))
                 .waitSeconds(1)
                 .turn(Math.toRadians(90))
                 .strafeTo(new Vector2d(-37,-24))

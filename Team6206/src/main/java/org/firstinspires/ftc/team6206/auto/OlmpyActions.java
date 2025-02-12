@@ -105,7 +105,7 @@ public class OlmpyActions {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!initialized) {
-                    bucket.setPosition(0.8);
+                    bucket.setPosition(0.333);
                     initialized = true;
                     startTime = telemetryPacket.addTimestamp();
                 }
@@ -127,7 +127,7 @@ public class OlmpyActions {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!initialized) {
-                    bucket.setPosition(1);
+                    bucket.setPosition(0);
                     initialized = true;
                     startTime = telemetryPacket.addTimestamp();
                 }

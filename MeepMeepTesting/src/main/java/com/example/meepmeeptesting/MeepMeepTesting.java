@@ -18,8 +18,8 @@ public class MeepMeepTesting {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(700);
 
-        /*RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep).setDimensions(14.5, 13).setColorScheme(new ColorSchemeRedDark())
-                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
+        RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep).setDimensions(14.5, 13).setColorScheme(new ColorSchemeRedDark())
+                //.Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(-30, -64, Math.toRadians(90)))
@@ -46,12 +46,12 @@ public class MeepMeepTesting {
                 );
 
 
-         */
-                       /* RoadRunnerBotEntity myBot2 = new DefaultBotBuilder(meepMeep).setDimensions(14.5, 13).setColorScheme(new ColorSchemeBlueDark())
+
+//                        RoadRunnerBotEntity myBot2 = new DefaultBotBuilder(meepMeep).setDimensions(14.5, 13).setColorScheme(new ColorSchemeBlueDark())
                                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                                .followTrajectorySequence(drive ->
-                                        drive.trajectorySequenceBuilder(new Pose2d(-36, -62, Math.toRadians(0)))
+ //                               .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+ //                               .followTrajectorySequence(drive ->
+ //                                       drive.trajectorySequenceBuilder(new Pose2d(-36, -62, Math.toRadians(0)))
 //                                                .lineTo(new Vector2d(-36,-10))
 //                                                .waitSeconds(0.5)
 //                                                .turn(Math.toRadians(90))
@@ -63,11 +63,11 @@ public class MeepMeepTesting {
 //                                                .turn(Math.toRadians(-90))
 //                                                .splineTo(new Vector2d(-62 ,-60), Math.toRadians(-90))
 
-                                                .lineTo(new Vector2d(-52,-62))
-                                                .build()
-                );
+  //                                              .lineTo(new Vector2d(-52,-62))
+  //                                              .build()
+  //              );
 
-                        */
+
 
        /* RoadRunnerBotEntity mySecondBot = new DefaultBotBuilder(meepMeep)
                 // We set this bot to be red
@@ -87,13 +87,16 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(-30, -62, Math.toRadians(90)))
-                                .waitSeconds(1)
-                                .splineTo(new Vector2d(-55 ,-52), Math.toRadians(-125))
-                                .turn(Math.toRadians(180))
-                                .lineTo(new Vector2d(-59,-56))
-                                .waitSeconds(1)
-                                .turn(Math.toRadians(-60))
-                                .splineTo(new Vector2d(55 ,-62), Math.toRadians(0))
+                                .lineTo(new Vector2d(-36,-10))
+                                                .waitSeconds(0.5)
+                                                .turn(Math.toRadians(90))
+                                                .splineTo(new Vector2d(-42 ,-60), Math.toRadians(-90))
+                                                .back(50)
+                                                .turn(Math.toRadians(-90))
+                                                .splineTo(new Vector2d(-52 ,-60), Math.toRadians(-90))
+                                                .back(50)
+                                                .turn(Math.toRadians(-90))
+                                                .splineTo(new Vector2d(-62 ,-60), Math.toRadians(-90))
                                 .build()
                 );
 
