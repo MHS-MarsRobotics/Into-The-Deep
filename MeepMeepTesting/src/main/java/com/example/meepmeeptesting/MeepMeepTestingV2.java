@@ -68,10 +68,10 @@ public class MeepMeepTestingV2 {
 
                                 */
 
-                                .splineTo(new Vector2d(8,-34 ), Math.toRadians(90))
-                                .splineToConstantHeading(new Vector2d(8,-38 ), Math.toRadians(90))
-                                .splineToLinearHeading(new Pose2d(38, -48 , Math.toRadians(90))  ,Math.toRadians(0))
-                                .splineToConstantHeading(new Vector2d(46, -6), Math.toRadians(0) )
+                                //.splineTo(new Vector2d(8,-34 ), Math.toRadians(90))
+                                //.splineToConstantHeading(new Vector2d(8,-38 ), Math.toRadians(90))
+                                //.splineToLinearHeading(new Pose2d(38, -48 , Math.toRadians(90))  ,Math.toRadians(0))
+                                //.splineToConstantHeading(new Vector2d(46, -6), Math.toRadians(0) )
 
                                 .strafeTo(new Vector2d(60, -61))
 

@@ -194,7 +194,7 @@ public class OlympMainDrive extends LinearOpMode {
             if (gamepad2.dpad_left) {
                 intake_angle.setPosition(0.35);
             } else if (gamepad2.dpad_right) {
-                intake_angle.setPosition(0.5);
+                intake_angle.setPosition(0.53);
             }
 
 
